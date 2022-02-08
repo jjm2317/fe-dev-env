@@ -104,4 +104,26 @@ AMD 기반으로 CommonJs 방식까지 지원
 <script type="module"></script>
 ```
 
+모던 브라우저는 대부분 지원한다.
+
+## webpack
+
+하나의 자바스크립트 모듈에서 다른 모듈을 import 하면 의존관계가 생긴다
+모듈로 연결된 여러개의 자바스크립트 파일을 하나의 파일로 합쳐주고, 그파일을 번들이라고한다. webpack 을 번들러라고 한다.
+
+옵션
+mode: development production none / 개발환경, 운영환경인지에 따라 옵션부여
+entry: 의존관계 모듈이 시작되는 부분, entry를 통해 모듈을 합침.
+output: 모듈을 저장하는 부분
+
+```
+node_modules/.bin/webpack --mode development --entry ./src/app.js --output-path dist
+```
+
+config: webpack 설정파일을 지정할 수 있다.
+npm script 사용시, 설치된 webpack 을 찾아서 명령어를 실행하며, 기본적으로 webpack.config.js 설정파일을 읽어서 번들링을 진행한다.
+
+entry에서는 모듈이 시작되는 파일을 지정할 수 있다.
+output 에서는 번들이 올라갈 경로를 지정하고 파일이름을 지정가능하다.
+
 </details>
