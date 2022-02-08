@@ -66,4 +66,42 @@ dependency에 라이브러리와 버전정보가 추가된다.
 
 정식 릴리즈 전에는 패키지 하위호환성을 지키지 않는 경우도 많으므로 캐럿을 사용하여 하위호환성을 유지할 수 있다.
 
-</detail>
+</details>
+
+<details>
+
+<summary>webpack</summary>
+script 태그를 사용하여 js 를 로딩하는 방식은 전역스코프를 공유하기때문에 네임스페이스가 오염되는 문제가 있다.
+
+IIFE
+
+## 모듈
+
+### commonJS 방식
+
+exports 키워드로 모듈을 만들고 require 빌트인 함수로 다른 스코프에서 불러들인다.
+
+```js
+// math.js
+exports function sum(a,b) {return a+b}
+
+//app.js
+const sum = require('./math.js');
+sum(1,2)
+```
+
+### AMD
+
+비동기로 로딩되는 환경에서 모듈을 사용
+
+### UMD
+
+AMD 기반으로 CommonJs 방식까지 지원
+
+## es6 표준 모듈
+
+```html
+<script type="module"></script>
+```
+
+</details>
