@@ -123,7 +123,25 @@ node_modules/.bin/webpack --mode development --entry ./src/app.js --output-path 
 config: webpack 설정파일을 지정할 수 있다.
 npm script 사용시, 설치된 webpack 을 찾아서 명령어를 실행하며, 기본적으로 webpack.config.js 설정파일을 읽어서 번들링을 진행한다.
 
+### entry, output
+
 entry에서는 모듈이 시작되는 파일을 지정할 수 있다.
 output 에서는 번들이 올라갈 경로를 지정하고 파일이름을 지정가능하다.
+
+```
+const path = require('path');
+
+module.exports = {
+  mode: 'development',
+  entry: {
+    main: './src/app.js',
+  },
+  output: {
+    path: path.resolve('./dist'), // 절대 경로를 계산해준다.
+    filename: '[name].js',
+  },
+};
+
+```
 
 </details>
