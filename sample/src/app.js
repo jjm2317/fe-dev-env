@@ -1,3 +1,6 @@
 import './app.css';
+import nyancat from './nyancat.jpg';
 
-console.log(123);
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.innerHTML = `<img src="${nyancat}"/>`;
+});

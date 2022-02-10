@@ -18,9 +18,13 @@ module.exports = {
         use: ['style-loader', 'css-loader'], // 사용할 로더 명시
       },
       {
-        test: /\.png$/,
-        loader: 'file-loader',
-        options: { publicPath: './dist/', name: '[name].[ext]?[hash]' },
+        test: /\.png|jpg|gif|svg$/,
+        loader: 'url-loader',
+        options: {
+          publicPath: './dist/',
+          name: '[name].[ext]?[hash]',
+          limit: 20000, // 20kb 미만은 url loader, 이상은 file loader
+        },
       },
     ],
   },
