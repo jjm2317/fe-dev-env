@@ -151,6 +151,8 @@ module.exports = {
 - 각 파일을 처리한다.
   - 각파일의 패턴을 명시하고, 패턴에 매치되는 파일들은 로더함수를 통해 처리한다.
 
+webpack config 파일에서, module.rules key에서 처리할 파일마다 작성할 수 있다.
+
 자주 사용하는 로더
 
 css-loader
@@ -160,14 +162,16 @@ css-loader 만사용해서는 css 를 dom 에 적용할 수 없다. html 에 직
 style-loader
 js 로 변경된 css 코드를 html에 넣어준다.
 
+css 를 처리할 때 위 두개 로더가 필요하며, use key 로 일괄 처리가능하다.
+
 file-loader
 이미지 파일도 적용할 수 있다.
 css 파일에서 img 파일도 가져올 수 있다.
 
 웹팩은 빌드할때마다 unique한 해시값을 생성한다. 파일 이름이 같고 내용이 달라지면 cashe busting 이 발생하기 때문이다.
 
-publicPath는 경로앞에 추가되는 문자열을 명시한다.
-name은 파일아웃풋을 만들때의 파일형식을 명시한다.
+publicPath는 경로앞에 추가되는 문자열을 명시한다. dist 파일에 저장된 이미지파일을 사용하려고 할때 사용한다.
+name은 파일아웃풋을 만들때의 파일형식을 명시한다. hash 값을 추가해 cache busting 을 방지할 수 있다.
 
 url loader
 한페이지에서 사용하는 이미지가 많으면 요청횟수가 많아져 사이트 성능이 낮아질 수 있다.
