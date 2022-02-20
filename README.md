@@ -179,4 +179,18 @@ url loader
 limit 키를 통해 파일 사이즈 기준을 잡을 수 있다.
 limit 값 이상의 파일에 대한 처리는 file loader 에 위임한다.
 
+### 플러그인
+
+로더가 파일단위로 처리하는 반면 플러그인은 번들된 결과물을 처리한다. 자바스크립트 난독화, 텍스트 추출에 사용
+
+플러그인은 클래스로 작성한다.
+
+- apply method 를 호출하면 웹팩은 complier 객체를 주입한다.
+
+- emit 이벤트를 통해 번들링된 결과물에 접근할 수 있다.
+  - compilation, callback 중 compliation 인자로 번들링 결과물에 접근할 수 있다.
+- config 파일에서, plugins 키 배열에 넣어준다.
+- 번들파일에 대해서 단 한번 실행된다.
+- compilation.assets[key].source 함수를 재정의 함으로서, 번들링 결과물 내용을 바꿀 수 있다.
+
 </details>
