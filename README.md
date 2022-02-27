@@ -213,12 +213,19 @@ module.exports = {
 **DefinePlugin**
 
 어플리케이션의 환경의존적인 정보를 제공한다.
+예를들어 프론트엔드 소스코드는 api 주소를 포함한다. 개발환경과 운영환경에서 주솟값이 다르므로 이러한 값들은 각 환경에서 다른 값들을 갖게 해야한다. Define Plugin 은 환경의존적인 값을 곤리할 수 있도록 해주므로 동적으로 환경에따라 다른 값을 주입해줄 수 있다.
 
 ```js
 const webpack = require('webpack');
 
 export default {
-  plugins: [new webpack.DefinePlugin({})],
+  plugins: [
+    new webpack.DefinePlugin({
+      JIMAN: '123 + 123', // 표현식을 문자열 형태로 전달하면 표현식이 평가된 값이 주입된다.
+      JIMAN2: JSON.stringify('123 + 123'), // 코드가 아닌 문자열 자체를 전달하고 싶으면 JSON.stringify 메서드를 사용한다.
+      'api.domain': JSON.stringify('dev.api.domain.com'), // 객체형태(키와 값)로도 전달할 수 있다.
+    }),
+  ],
 };
 ```
 
@@ -253,13 +260,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports {
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.html', // html 에 번들을 로드하는 script 태그가 없어도 자동으로 주입해준다. html 을 덜 의존적인 코드로 만들어준다.
+      // html에 동적으로 값을 넣어줄 수 있다. <% = env %> 와 같이 사용할 수 있다.
       templateParameters: {
         env: process.env.NODE_ENV
       },
       minify: {
-        collapseWhitespace: true,
-        removeComments: true
+        collapseWhitespace: true, // 빈칸을 제거한다.
+        removeComments: true, // 주석을 제거한다.
       },
       hash: true
     })
@@ -268,7 +276,8 @@ module.exports {
 ```
 
 **CleanWebpackPlugin**
-빌드 이전 결과물을 제거할 수 있다.
+빌드 이전 결과물을 제거할 수 있다. 파일을 덮어쓰는 경우 업데이트가 되겠지만, 그렇지 않은 경우 재빌드시 쓰이지 않지만 남아있는 파일이 있을 수 있다.
+재빌드 시 이전 결과물을 제거한 후 번들을 생성하는 역할을 한다.
 
 ```js
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -287,6 +296,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   plugins: [
+    // 개발환경에서는 자바스크립트 파일 하나로 빌드하는것이 빠르게 빌드된다.
     ...(process.env.NODE_ENV === 'production'
       ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
       : []),
