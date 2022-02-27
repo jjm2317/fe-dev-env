@@ -193,4 +193,105 @@ limit 값 이상의 파일에 대한 처리는 file loader 에 위임한다.
 - 번들파일에 대해서 단 한번 실행된다.
 - compilation.assets[key].source 함수를 재정의 함으로서, 번들링 결과물 내용을 바꿀 수 있다.
 
+**BannerPlugin**
+번들링 결과물에 추가적인 정보를 주석으로 작성할 수 있다.빌드 정보, 커밋 버전 등을 추가한다.
+
+```js
+const webpack = require('webpack');
+
+module.exports = {
+  plugins: [
+    new webpack.BannerPlugin({
+      // banner: 'banner~~',
+      // 번들이 컴파일되는 시점, 즉 빌드 시점을 얻기 위해 함수 표현식으로 전달가능하다.
+      banner: () => `build time: ${new Date().toLocaleString()}`, // 함수 블록은 호출되는 시점에 실행되기 때문에 빌드 시점을 기록가능하다.
+    }),
+  ],
+};
+```
+
+**DefinePlugin**
+
+어플리케이션의 환경의존적인 정보를 제공한다.
+
+```js
+const webpack = require('webpack');
+
+export default {
+  plugins: [new webpack.DefinePlugin({})],
+};
+```
+
+노드 환경정보는 기본값으로 제공한다.
+웹팩 설정의 mode 값에 설정한 값이 들간다.
+
+```js
+process.env.NODE_ENV; // 'development'
+```
+
+**HtmlWebpackPlugin**
+html 파일을 후처리하는데 사용된다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>타이틀<%= env %></title>
+  </head>
+  <body></body>
+</html>
+```
+
+위 `<%= env %>` 에 HtmlWebpackPlugin은 빌드 타임에 env 에 입력된 값을 주입해준다. 즉, 빌드 타임에 동적으로 html 에 값을 입력할 수 있다.
+env는 전달받은 env 변수 값을 출력한다.
+
+추가로, 빌드 결과물을 로딩하는 코드를 생성해준다.
+
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports {
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      templateParameters: {
+        env: process.env.NODE_ENV
+      },
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true
+      },
+      hash: true
+    })
+  ]
+}
+```
+
+**CleanWebpackPlugin**
+빌드 이전 결과물을 제거할 수 있다.
+
+```js
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+module.exports = {
+  plugins: [new CleanWebpackPlugin()],
+};
+```
+
+**MiniCssExtractPlugin**
+브라우저에서 하나의 큰파일을 다운로드하는것보다 여러개의 작은 파일을 동시에 다운로드하는 것이 빠르다.
+css 를 별도 파일로 뽑아낼 수 있다.
+
+```js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  plugins: [
+    ...(process.env.NODE_ENV === 'production'
+      ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
+      : []),
+  ],
+};
+```
+
 </details>
