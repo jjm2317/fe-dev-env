@@ -128,11 +128,13 @@ npm script 사용시, 설치된 webpack 을 찾아서 명령어를 실행하며,
 entry에서는 모듈이 시작되는 파일을 지정할 수 있다.
 output 에서는 번들이 올라갈 경로를 지정하고 파일이름을 지정가능하다.
 
-```
+```js
 const path = require('path');
-
-module.exports = {
-  mode: 'development',
+  // 함수로 export 할 수도 있다. --env 뒤의 인자값이 들어온다.
+// module.exports = {
+  module.exports = function(webpackEnv) {
+    return {
+  mode: webpackEnv.production? 'production' : 'development',
   entry: {
     main: './src/app.js',
   },
@@ -194,6 +196,7 @@ limit 값 이상의 파일에 대한 처리는 file loader 에 위임한다.
 - compilation.assets[key].source 함수를 재정의 함으로서, 번들링 결과물 내용을 바꿀 수 있다.
 
 **BannerPlugin**
+웹팩이 기본적으로 제공하는 빌트인 플러그인
 번들링 결과물에 추가적인 정보를 주석으로 작성할 수 있다.빌드 정보, 커밋 버전 등을 추가한다.
 
 ```js
@@ -303,5 +306,86 @@ module.exports = {
   ],
 };
 ```
+
+</details>
+
+<details>
+<summary>Babel<summary>
+
+## basic
+
+ES6+ 로 작성된 코드를 모든 브라우저에서 동작하게 해준다.
+
+- javascript 최신 문법을 이해하지 못하는 브라우저도 있다.
+  - ie
+- 타입스크립트, jsx 등도 브라우저가 이해할 수 있게 트랜스파일링해준다.
+
+```
+// babel core 와, terminal 에서 사용하기위한 babel/cli 를 설치한다.
+npm install -D @babel/core @babel/cli
+```
+
+```js
+// ie 는 인식하지 못하는 코드다. arrow func, const
+const alert = (msg) => window.alert(msg);
+```
+
+```
+node_modules/.bin/babel app.js
+//or
+npx babel app.js
+```
+
+**트랜스파일 순서**
+
+1. Parsing
+
+코드를 읽고 AST 로 변환한다.
+
+> AST(abstract syntax tree)
+> 소스코드 텍스트에서 컴파일러에 의해 번역된 계층적 프로그램 표현이다.
+> 컴파일러의 lexical, syntax analyzer 가 그역할을 담당한다.
+> 어휘분석된 토큰목록이 구문검증 후 트리구조로 변환된다.
+
+2. Transforming
+   es6문법으로 작성된 토큰을 es5문법으로 변환한다.
+3. Printing
+
+## 플러그인
+
+바벨의 플러그인이 Transforming(변환)을 담당한다.
+
+다음과 같이 터미널에서 실행가능하다.
+
+```
+npx babel app.js --plugins './my-babel-plugin.js'
+```
+
+```js
+module.exports = function myBabelPlugin() {
+  return {
+    visitor: {
+      // AST 에서 식별자들을 순회한다.
+      Identifier(path) {
+        const name = path.node.name;
+
+        console.log(name);
+
+        path.node.name = name.split('').reverse().join('');
+      },
+      // 변수 선언 키워드를 순회한다.
+      VariableDeclaration(path) {
+        console.log('VariableDeclaration() kind:', path.node.kind); // const
+
+        if (path.node.kind === 'const') {
+          path.node.kind = 'var';
+        }
+      },
+    },
+  };
+};
+```
+
+### 커스텀 플러그인
 
 </details>
