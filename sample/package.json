@@ -16,6 +16,9 @@
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-arrow-functions": "^7.16.7",
+    "@babel/plugin-transform-block-scoping": "^7.16.7",
+    "@babel/plugin-transform-strict-mode": "^7.16.7",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^5.2.0",
     "file-loader": "^6.2.0",

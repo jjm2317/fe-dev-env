@@ -386,6 +386,52 @@ module.exports = function myBabelPlugin() {
 };
 ```
 
-### 커스텀 플러그인
+### 주로 사용하는 플러그인
+
+**@babel/plugin-transform-block-scoping**
+
+- let, const 로 작성한 변수를 var키워드로 바꿔주고,
+  블록 스코핑을 지원하도록 한다.
+
+**@babel/plugin-transform-arrow-functions**
+
+- 화살표 함수로 작성한 함수 표현식을 function 키워드로 작성한 일반함수 표현식으로 변환한다.
+
+**@babel/plugin-transform-strict-mode**
+
+- use strict 모드를 사용하도록한다.
+
+### config
+
+웹팩과 마찬가지로 babel config 파일로 플러그인 설정이 가능하다.
+
+```js
+module.exports = {
+  plugins: [
+    '@babel/plugin-transform-block-scoping',
+    '@babel/plugin-transform-arrow-functions',
+    '@babel/plugin-transform-strict-mode',
+  ],
+};
+```
+
+플러그인을 일일히 설정하는것이 까다로우니 프리셋을 사용한다.
+
+```js
+//my-babel-preset.js
+module.exports = function myBabelPreset() {
+  return {
+    plugins: [
+      '@babel/plugin-transform-block-scoping',
+      '@babel/plugin-transform-arrow-functions',
+      '@babel/plugin-transform-strict-mode',
+    ],
+  };
+};
+
+module.exports = {
+  presets: ['./my-babel-preset.js'],
+};
+```
 
 </details>
