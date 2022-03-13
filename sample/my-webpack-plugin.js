@@ -13,7 +13,7 @@ class MyWebpackPlugin {
           ' * Build Date: 2022-02-20',
           ' */',
         ].join('\n');
-        return banner + '\n' + source;
+        return `${banner}\n${source}`;
       };
 
       callback();

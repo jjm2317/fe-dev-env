@@ -307,6 +307,12 @@ module.exports = {
 };
 ```
 
+## 개발 서버
+
+인터넷에 웹사이트 게시하려면 서버가 파일을 클라이언트에 제공하여야한다.
+운영환경과 유사하게 개발환경을 설정할 수 있는데 webpack dev-server 를 통해서 한다.
+개발 서버는 코드변화를 감지한다.
+
 </details>
 
 <details>
@@ -459,5 +465,29 @@ corejs 를 설치하여 사용설정하면, 폴리필을 지원한다.
 ### 웹팩 통합
 
 바벨은 cli 로 직접사용하지 않고 웹팩으로 통합하여 사용하는 것이 일반적이다. babel-loader를 사용한다.
+
+### Sass
+
+babel 과 유사하게 Sass도 css 문법으로 변환하여 사용한다.
+
+</details>
+
+<details>
+<summary>lint & prettier</summary>
+
+## ESLint
+
+코드 포맷팅과 코드 품질을 검사한다. 코드 포맷팅으로는 들여쓰기나 줄 길이 드이 있다.
+**rule**
+Eslint 에서 제공하는 설정으로 코드 검사시에 적용할 항목을 결정할 수 있다. 각 rule 마다 어떤 노티를 줄 것인지 설정하며, error 로 설정된 값은 미준수시 에러를 뱉는다.
+
+**extensible config**
+rule을 모아놓은 것이다.
+
+일반적으로 `npx eslint --init` 명령어를 통해 설정하는 것이 편하다.
+
+## prettier
+
+코드 포맷팅을 제공하는 툴이다. eslint 와 함께 사용가능하다.
 
 </details>

@@ -8,14 +8,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    main: './app.js',
-    // main2: './src/app2.js',
+    main: './src/app.js',
   },
   output: {
     path: path.resolve('./dist'),
     // main으로 치환된다. entry 가 여러개 있을 수도 있는데, 그에맞는 output 이름을 동적으로 만들 수 있다.
     filename: '[name].js',
   },
+  devServer: {},
   module: {
     rules: [
       {
@@ -77,5 +77,3 @@ module.exports = {
       : []),
   ],
 };
-
-console.log(process.env.NODE_ENV);
