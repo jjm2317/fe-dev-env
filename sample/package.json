@@ -12,6 +12,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "babel-loader": "^8.2.3",
     "core-js": "^3.21.1",
     "html-webpack-plugin": "^3.2.0",
@@ -29,6 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "clean-webpack-plugin": "^4.0.0",
+    "connect-api-mocker": "^1.10.0",
     "css-loader": "^5.2.0",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",

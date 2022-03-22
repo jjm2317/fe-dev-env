@@ -4,6 +4,7 @@ const childProcess = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const apiMocker = require('connect-api-mocker');
 
 module.exports = {
   mode: 'development',
@@ -15,7 +16,17 @@ module.exports = {
     // main으로 치환된다. entry 가 여러개 있을 수도 있는데, 그에맞는 output 이름을 동적으로 만들 수 있다.
     filename: '[name].js',
   },
-  devServer: {},
+  devServer: {
+    client: {
+      overlay: true,
+    },
+    devMiddleware: {
+      stats: 'errors-only',
+    },
+    onBeforeSetupMiddleware: (devServer) => {
+      devServer.app.use(apiMocker('/api', 'mocks/api'));
+    },
+  },
   module: {
     rules: [
       {

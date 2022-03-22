@@ -313,6 +313,51 @@ module.exports = {
 운영환경과 유사하게 개발환경을 설정할 수 있는데 webpack dev-server 를 통해서 한다.
 개발 서버는 코드변화를 감지한다.
 
+progress 옵션을 통해 빌드 진행률을 볼 수 있다. 번들이 큰 경우 유용
+
+```
+"start": "webpack-dev-server --progress",
+```
+
+devServer 옵션에 설정을 추가할 수 있는데, overlay(빌드 에러를 클라이언트에 보여줌), stats(error 만 서버로그로 보여줌) 등을 추가하여 개발 환경을 구성할 수 있다. 아래는 4^ 버전의 설정예시이다.
+
+```js
+devServer: {
+    client: {
+      overlay: true,
+    },
+    devMiddleware: {
+      stats: 'errors-only',
+    },
+  },
+```
+
+### mockup api
+
+어떤 기능이 개발될 때 필요한 모델이 설계된 후, 화면에 제공되어야할 api가 개발되어야 한다. 이때, fe 개발자는 api 개발완료를 기다리기보다는 다음과 같이 개발일정을 단축시킬 수 있다.
+
+1. 설계된 api 에 기반한 mock api 를 작성
+2. mock api를 이용하여 클라이언트 개발
+3. mock api를 실 api로 교체
+
+devServer는 api 를 mock up할 수 있는 기능을 제공한다.
+다음과 같이 onBeforeSetupMiddleware 프로퍼티를 추가한다.
+
+```js
+devServer: {
+    onBeforeSetupMiddleware: (devServer) => {
+      devServer.app.get('/some/path', (req, res) => {
+        res.json({ custom: 'response' });
+      });
+    },
+  },
+```
+
+### 실 api 연동
+
+처음 리소스를 제공받은 브라우저와 포트번호가 다르면 CORS가 뜬다.
+Access-Control-Allow-Origin 헤더를 추가할 수도 있고, proxy 옵션을 통해 개발서버에서 포트를 변경해줄수도 있다.
+
 </details>
 
 <details>
@@ -497,3 +542,5 @@ husky 라이브러리를 사용하면 이를 쉽게 할 수 있다.
 lint-staged를 함께 사용하면, 변경한 파일에 대해서만 linting을 할 수 있다.
 
 </details>
+
+<details>
