@@ -24,7 +24,11 @@ module.exports = {
       stats: 'errors-only',
     },
     onBeforeSetupMiddleware: (devServer) => {
-      devServer.app.use(apiMocker('/api', 'mocks/api'));
+      devServer.app.use(apiMocker('localhost:8000/api', 'mocks/api'));
+    },
+    port: 3001,
+    proxy: {
+      '/api': 'http://localhost:8000',
     },
   },
   module: {
